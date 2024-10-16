@@ -42,7 +42,6 @@ jobs:
           ${{ github.event.inputs.reason }}
         draft: false
         prerelease: false
-    
     - name: Upload Release Asset
       uses: actions/upload-release-asset@v1
       env:
@@ -52,3 +51,9 @@ jobs:
         asset_path: ./x64/Release/minimfc.exe
         asset_name: minimfc.exe
         asset_content_type: application/vnd.microsoft.portable-executable
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: output
+        path: ./x64/Release/minimfc.exe
+        retention-days: 30
