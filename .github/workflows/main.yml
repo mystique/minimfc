@@ -29,16 +29,17 @@ jobs:
     - name: Generate release tag
       id: tag
       run: |
-        echo "release_tag=release_$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+        echo "RELEASE_TAG=release_$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
         
     - name: Create Release
       id: create_release
       uses: actions/create-release@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        RELEASE_TAG: ${{ steps.tag.outputs.RELEASE_TAG }}
       with:
-        tag_name: ${{ steps.tag.outputs.release_tag }}
-        release_name: Release ${{ steps.tag.outputs.release_tag }}
+        tag_name: $RELEASE_TAG
+        release_name: Release $RELEASE_TAG
         body: |
           ${{ github.event.inputs.reason }}
         draft: false
