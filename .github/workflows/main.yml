@@ -52,7 +52,7 @@ jobs:
         asset_name: minimfc.exe
         asset_content_type: application/vnd.microsoft.portable-executable
     - name: Upload Artifact
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v4
       with:
         name: output
         path: ./x64/Release/minimfc.exe
