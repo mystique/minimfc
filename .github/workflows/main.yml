@@ -28,9 +28,8 @@ jobs:
 
     - name: Generate release tag
       id: tag
-      shell: pwsh
       run: |
-        echo RELEASE_TAG=release_$(git rev-parse --short HEAD) >> $GITHUB_OUTPUT
+        echo "::set-output name=RELEASE_TAG::$(git rev-parse --short HEAD)"
         
     - name: Create Release
       id: create_release
