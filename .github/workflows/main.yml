@@ -1,0 +1,62 @@
+name: Build and Release MFC Project
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+    inputs:
+      reason:
+        description: 'Reason for manual build'
+        required: false
+        default: 'Manual trigger'
+
+jobs:
+  build:
+    runs-on: windows-latest
+    
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+    
+    - name: Add MSBuild to PATH
+      uses: microsoft/setup-msbuild@v2
+    
+    - name: Build solution
+      run: msbuild /p:Configuration=Release /p:Platform=x64 minimfc.sln
+
+    - name: Generate release tag
+      id: tag
+      run: |
+        echo "::set-output name=RELEASE_TAG::$(git rev-parse --short HEAD)"
+        
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ steps.tag.outputs.RELEASE_TAG }}
+        release_name: Release ${{ steps.tag.outputs.RELEASE_TAG }}
+        body: |
+          ${{ github.event.inputs.reason }}
+        draft: false
+        prerelease: false
+
+    - name: Upload Release Asset
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./x64/Release/minimfc.exe
+        asset_name: minimfc.exe
+        asset_content_type: application/vnd.microsoft.portable-executable
+
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: minimfc.exe
+        path: ./x64/Release/minimfc.exe
+        retention-days: 30
