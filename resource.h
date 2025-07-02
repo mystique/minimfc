@@ -1,4 +1,5 @@
-#define ID_MENU      101
-#define ID_MENU_QUIT    102
+#define ID_MENU 101
+#define ID_MENU_TOGGLE_WINDOW 102
+#define ID_MENU_QUIT 103
 
 #define MAIN_ICON 201

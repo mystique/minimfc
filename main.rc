@@ -5,6 +5,7 @@ ID_MENU MENU
 BEGIN
     POPUP "Main"
     BEGIN
+        MENUITEM "Show/Hide Window", ID_MENU_TOGGLE_WINDOW
         MENUITEM "Quit", ID_MENU_QUIT
     END
 END
