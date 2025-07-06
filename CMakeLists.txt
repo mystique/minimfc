@@ -15,12 +15,20 @@ endif()
 # MFC configuration (2 = Shared MFC)
 set(CMAKE_MFC_FLAG 2)
 
+if(MSVC)
+  add_compile_options(/utf-8)
+endif()
+
 # Unicode support
 add_definitions(-DUNICODE -D_UNICODE)
 
 # Create executable
 add_executable(${PROJECT_NAME} WIN32
     main.cpp
+    main_app.cpp
+    main_app.h
+    main_frame.cpp
+    main_frame.h
     resource.h
     main.rc
     app.ico

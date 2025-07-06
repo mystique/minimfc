@@ -161,11 +161,15 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="main_app.cpp" />
+    <ClCompile Include="main_frame.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="main.rc" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="main_app.h" />
+    <ClInclude Include="main_frame.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
